@@ -1,28 +1,31 @@
 package stee.security.auth.configs;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.stereotype.Service;
-import stee.security.auth.entities.SteeUser;
-import stee.security.auth.repositories.SteeUserRepository;
-
+import stee.security.auth.entities.AppUser;
+import stee.security.auth.repositories.AppUserRepository;
+import stee.security.auth.services.AppUserService;
+/**
+ * Created by Steeve Jean Chilles on 09/22/2023
+ */
 
 @Service
-public class SteeUserDetailsService implements UserDetailsService {
-    private SteeUserRepository steeUserRepository;
-
-    public SteeUserDetailsService(SteeUserRepository steeUserRepository) {
-        this.steeUserRepository = steeUserRepository;
-    }
-
+@AllArgsConstructor
+public class AppUserDetailsService implements UserDetailsService {
+    private AppUserRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SteeUser user = steeUserRepository.findByUsername(username);
+        AppUser user = appUserRepository.findByUsername(username);
 
-        SteeUserDetails steeUserDetails = new SteeUserDetails(user);
+        if (user == null) {
+            throw new UsernameNotFoundException("username " + username + " is not found");
+        }
+        AppUserDetails steeUserDetails = new AppUserDetails(user);
        // return new User( steeUserDetails.getUsername(), steeUserDetails.getPassword(), steeUserDetails.getAuthorities() );
         return steeUserDetails;
 

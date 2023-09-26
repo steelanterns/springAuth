@@ -11,8 +11,9 @@ import java.util.List;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class SteeUser {
+public class AppUser {
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(unique = true)
@@ -21,7 +22,7 @@ public class SteeUser {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<SteeGroup> groups = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER) //to also have the groups to which it belongs
+    private List<AppGroup> groups = new ArrayList<>();
 
 }

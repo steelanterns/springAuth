@@ -3,29 +3,29 @@ package stee.security.auth.configs;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import stee.security.auth.entities.SteeUser;
+import stee.security.auth.entities.AppUser;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SteeUserDetails implements UserDetails {
+public class AppUserDetails implements UserDetails {
     private String username;
     private String password;
     private Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-    public SteeUserDetails(SteeUser steeUser) {
-        this.username = steeUser.getUsername();
-        this.password = steeUser.getPassword();
-        this.authorities = mappedAuthorities(steeUser);
+    public AppUserDetails(AppUser appUser) {
+        this.username = appUser.getUsername();
+        this.password = appUser.getPassword();
+        this.authorities = mappedAuthorities(appUser);
     }
 
-    private Collection<GrantedAuthority> mappedAuthorities(SteeUser steeUser){
-        Collection<GrantedAuthority> mappedAuthorities = new ArrayList<>();
-        steeUser.getGroups().forEach( group -> {
+    private Collection<GrantedAuthority> mappedAuthorities(AppUser appUser){
+//        Collection<GrantedAuthority> mappedAuthorities = new ArrayList<>();
+        appUser.getGroups().forEach( group -> {
             authorities.add( new SimpleGrantedAuthority( group.getGroupName() ) );
         });
-        return mappedAuthorities;
+        return authorities;
     }
 
     @Override

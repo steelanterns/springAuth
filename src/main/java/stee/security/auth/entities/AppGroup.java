@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SteeGroup {
+public class AppGroup {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

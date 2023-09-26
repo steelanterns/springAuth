@@ -4,16 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import stee.security.auth.entities.SteeGroup;
-import stee.security.auth.entities.SteeUser;
-import stee.security.auth.services.UserService;
+import stee.security.auth.entities.AppGroup;
+import stee.security.auth.entities.AppUser;
+import stee.security.auth.services.AppUserService;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
+/**
+ * Created by Steeve Jean Chilles on 09/22/2023
+ */
 @SpringBootApplication
 public class AuthApplication {
 
@@ -23,21 +21,21 @@ public class AuthApplication {
 
 
 	@Bean
-	CommandLineRunner start(UserService userService ){
+	CommandLineRunner start(AppUserService appUserService ){
 		return args -> {
-			userService.addGroup( new SteeGroup( null, "USER", "Desc") );
-			userService.addGroup( new SteeGroup( null, "ADMIN", "Desc") );
-			userService.addGroup( new SteeGroup( null, "GUEST", "Desc") );
+			appUserService.addGroup( new AppGroup( null, "ROLE_USER", "Desc") );
+			appUserService.addGroup( new AppGroup( null, "ROLE_ADMIN", "Desc") );
+			appUserService.addGroup( new AppGroup( null, "ROLE_GUEST", "Desc") );
 
-			userService.add( new SteeUser(null, "user", "pass", new ArrayList<>() {
+			appUserService.save( new AppUser(null, "user", "pass", new ArrayList<>() {
 			}) );
-			userService.add( new SteeUser(null, "admin", "pass", new ArrayList<>() ) );
-			userService.add( new SteeUser(null, "guest", "pass", new ArrayList<>() ) );
+			appUserService.save( new AppUser(null, "admin", "pass", new ArrayList<>() ) );
+			appUserService.save( new AppUser(null, "guest", "pass", new ArrayList<>() ) );
 
-			userService.addUserToGroup("user", "USER");
-			userService.addUserToGroup("admin", "USER");
-			userService.addUserToGroup("admin", "ADMIN");
-			userService.addUserToGroup("guest", "GUEST");
+			appUserService.addUserToGroup("user", "ROLE_USER");
+			appUserService.addUserToGroup("admin", "ROLE_USER");
+			appUserService.addUserToGroup("admin", "ROLE_ADMIN");
+			appUserService.addUserToGroup("guest", "ROLE_GUEST");
 		};
 	}
 
