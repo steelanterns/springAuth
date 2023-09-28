@@ -22,7 +22,7 @@ public class AppUserRestController {
 
     //@CrossOrigin(origins = "http://localhost:8082")
     @GetMapping(path = "/users")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')") // this is how to Autorize
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')") // this is how to Autorize
     public List<AppUser> users(){
         return appUserService.findAll();
     }

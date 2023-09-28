@@ -1,11 +1,8 @@
-package stee.security.auth.services.map;
+package stee.security.auth.services.impl;
 
 import java.util.*;
 
-/**
- * Created by Steeve Jean Chilles on 09/22/2023
- */
-public abstract class AbstractMapService<T, ID> {
+public class AbstractImplService<T, ID> {
     protected Map<ID, T> map = new HashMap<>();
 
     List<T> findAll(){
